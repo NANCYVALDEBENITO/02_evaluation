@@ -4,15 +4,15 @@ def readcsv_to_hash
   # create array and hash for operating
   data_hash = {}
   names = []
-  califications = []
+  marks = []
   # open csv for reading data
   CSV.foreach('file.csv') do |row|
     names.push(row.shift)
-    califications.push(row)
+    marks.push(row)
   end
   # append array to hash
   data_hash[:name] = names
-  data_hash[:calification] = califications
+  data_hash[:mark] = marks
   data_hash
 end
 
@@ -21,11 +21,11 @@ def mean_elements(array)
   del = 0
   array.each do |i|
     sum += i.to_i
-    del = if i == ' A' ||i =='A'
-            del = del +1
-          else
-            del = del +0
-          end
+    del = del = if i == ' A' || i == 'A'
+                  del + 1
+                else
+                  del + 0
+                end
   end
   mean = sum.to_f / (array.length - del)
   mean
@@ -42,7 +42,8 @@ def item1(name_str)
   h = readcsv_to_hash
   (0..h[:name].length - 1).each do |n|
     next unless h[:name][n] == name_str
-    write_csv(h[:name][n], mean_elements(h[:calification][n]))
+
+    write_csv(h[:name][n], mean_elements(h[:mark][n]))
   end
 end
 
@@ -50,21 +51,30 @@ def item2(name_str)
   h = readcsv_to_hash
   (0..h[:name].length - 1).each do |n|
     next unless h[:name][n] == name_str
-    puts h[:calification][n].count 'A'
+
+    puts h[:mark][n].count 'A'
   end
 end
 
+def item3(name_str, approval)
+  h = readcsv_to_hash
+  (0..h[:name].length - 1).each do |n|
+    next unless h[:name][n] == name_str
 
-
-def item3
-  puts ''
+    if mean_elements(h[:mark][n]) >= approval
+      puts "Congratulations, You've been approved"
+    else
+      puts 'Your marks are onsatisfactory'
+    end
+  end
 end
 
 def item4
   puts ''
 end
 
-#loop do
+
+# loop do
 #   puts "Escribe tu nombre antes de empezar"
 #   name =gets.chomp
 #   if select == '1'
@@ -72,8 +82,9 @@ end
 #   elsif select == '2'
 #     item2(name)
 #   elsif select == '3'
-#     puts 'Los productos disponibles son :'
-#     item3
+#     puts 'Ingresa el promedio mínimo de aprobación :'
+#     mark = gets.chomp
+#     item3(name, mark)
 #   elsif select == '4'
 #     puts ''
 #   elsif select == 'exit'
