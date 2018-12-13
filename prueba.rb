@@ -17,34 +17,42 @@ def readcsv_to_hash
 end
 
 def mean_elements(array)
-  sum, mean = 0
+  sum, mean, del = 0
+  del = 0
   array.each do |i|
     sum += i.to_i
+    del = if i == ' A' ||i =='A'
+            del = del +1
+          else
+            del = del +0
+          end
   end
-  mean = sum.to_f / array.length
-  return mean
+  mean = sum.to_f / (array.length - del)
+  mean
 end
 
-def write_csv(name,mean)
-	CSV.open(name+'.csv', 'w') do |csv|
-		csv << ['name','mean']
-		csv << [name,mean]
-	end
+def write_csv(name, mean)
+  CSV.open(name + '.csv', 'w') do |csv|
+    csv << %w[name mean]
+    csv << [name, mean]
+  end
 end
-
 
 def item1(name_str)
   h = readcsv_to_hash
   (0..h[:name].length - 1).each do |n|
-    if h[:name][n] == name_str
-      puts h[:name][n]
-      puts mean_elements(h[:calification][n])
-      write_csv(h[:name][n],mean_elements(h[:calification][n]))
-     end
+    next unless h[:name][n] == name_str
+
+    puts h[:name][n]
+    puts mean_elements(h[:calification][n])
+    write_csv(h[:name][n], mean_elements(h[:calification][n]))
   end
 end
 
 item1('David')
+item1('Gonzalo')
+item1('Mai')
+item1('JP')
 
 def item2
   puts ''
