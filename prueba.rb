@@ -17,7 +17,7 @@ def readcsv_to_hash
 end
 
 def mean_elements(array)
-  sum, mean, del = 0
+  sum, mean = 0
   del = 0
   array.each do |i|
     sum += i.to_i
@@ -42,21 +42,19 @@ def item1(name_str)
   h = readcsv_to_hash
   (0..h[:name].length - 1).each do |n|
     next unless h[:name][n] == name_str
-
-    puts h[:name][n]
-    puts mean_elements(h[:calification][n])
     write_csv(h[:name][n], mean_elements(h[:calification][n]))
   end
 end
 
-item1('David')
-item1('Gonzalo')
-item1('Mai')
-item1('JP')
-
-def item2
-  puts ''
+def item2(name_str)
+  h = readcsv_to_hash
+  (0..h[:name].length - 1).each do |n|
+    next unless h[:name][n] == name_str
+    puts h[:calification][n].count 'A'
+  end
 end
+
+
 
 def item3
   puts ''
@@ -66,12 +64,13 @@ def item4
   puts ''
 end
 
-# loop do
-
+#loop do
+#   puts "Escribe tu nombre antes de empezar"
+#   name =gets.chomp
 #   if select == '1'
-#     item1
+#     item1(name)
 #   elsif select == '2'
-#     item2
+#     item2(name)
 #   elsif select == '3'
 #     puts 'Los productos disponibles son :'
 #     item3
