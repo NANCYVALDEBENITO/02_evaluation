@@ -16,11 +16,31 @@ def readcsv_to_hash
   data_hash
 end
 
+def mean_elements(array)
+  sum, mean = 0
+  array.each do |i|
+    sum += i.to_i
+  end
+  mean = sum.to_f / array.length
+  return mean
+end
+
+def write_csv(name,mean)
+	CSV.open(name+'.csv', 'w') do |csv|
+		csv << ['name','mean']
+		csv << [name,mean]
+	end
+end
+
+
 def item1(name_str)
   h = readcsv_to_hash
-  puts h[:name].length
   (0..h[:name].length - 1).each do |n|
-    puts h[:name][n] if h[:name][n] == name_str
+    if h[:name][n] == name_str
+      puts h[:name][n]
+      puts mean_elements(h[:calification][n])
+      write_csv(h[:name][n],mean_elements(h[:calification][n]))
+     end
   end
 end
 
