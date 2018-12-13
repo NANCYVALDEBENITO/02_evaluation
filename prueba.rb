@@ -45,6 +45,7 @@ def item1(name_str)
 
     write_csv(h[:name][n], mean_elements(h[:mark][n]))
   end
+  puts 'El archivo ya se ha generado'
 end
 
 def item2(name_str)
@@ -52,6 +53,7 @@ def item2(name_str)
   (0..h[:name].length - 1).each do |n|
     next unless h[:name][n] == name_str
 
+    puts 'Número de inasistencias: '
     puts h[:mark][n].count 'A'
   end
 end
@@ -61,36 +63,35 @@ def item3(name_str, approval)
   (0..h[:name].length - 1).each do |n|
     next unless h[:name][n] == name_str
 
-    if mean_elements(h[:mark][n]) >= approval
+    if mean_elements(h[:mark][n]) >= approval.to_f
       puts "Congratulations, You've been approved"
     else
       puts 'Your marks are onsatisfactory'
     end
   end
 end
+puts 'Escribe tu nombre antes de empezar'
+nombre = gets.chomp
 
-def item4
-  puts ''
+loop do
+
+  puts 'Opción 1: Descarga el promedio de notas obtenido'
+  puts 'Opción 2: Muestra el total de inasistencias'
+  puts 'Opción 3: Muestra el resultado de aprobación'
+  puts 'Opción 4: Salida'
+  select = gets.chomp
+  if select == '1'
+    item1(nombre)
+  elsif select == '2'
+    item2(nombre)
+  elsif select == '3'
+    puts 'Ingresa el promedio mínimo de aprobación :'
+    mark = gets.chomp
+    item3(nombre, mark)
+  elsif select == '4'
+    break
+  else
+    puts 'Esta no es una opción válida'
+
+  end
 end
-
-
-# loop do
-#   puts "Escribe tu nombre antes de empezar"
-#   name =gets.chomp
-#   if select == '1'
-#     item1(name)
-#   elsif select == '2'
-#     item2(name)
-#   elsif select == '3'
-#     puts 'Ingresa el promedio mínimo de aprobación :'
-#     mark = gets.chomp
-#     item3(name, mark)
-#   elsif select == '4'
-#     puts ''
-#   elsif select == 'exit'
-#     break
-#   else
-#     puts 'Esta no es una opción válida'
-
-#   end
-# end
