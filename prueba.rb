@@ -16,8 +16,8 @@ def readcsv_to_hash
   data_hash
 end
 
-def mean_elements(array)
-  sum, mean = 0
+def average_elements(array)
+  sum, average = 0
   del = 0
   array.each do |i|
     sum += i.to_i
@@ -27,67 +27,66 @@ def mean_elements(array)
                   del + 0
                 end
   end
-  mean = sum.to_f / (array.length - del)
-  mean
+  average = sum.to_f / (array.length - del)
+  average
 end
 
-def write_csv(name, mean)
+def write_csv(name, average)
   CSV.open(name + '.csv', 'w') do |csv|
-    csv << %w[name mean]
-    csv << [name, mean]
+    csv << %w[name average]
+    csv << [name, average]
   end
 end
 
-def item1(name_str)
+def item1
   h = readcsv_to_hash
   (0..h[:name].length - 1).each do |n|
-    next unless h[:name][n] == name_str
+    # next unless h[:name][n] == name_str
 
-    write_csv(h[:name][n], mean_elements(h[:mark][n]))
+    write_csv(h[:name][n], average_elements(h[:mark][n]))
   end
-  puts 'El archivo ya se ha generado'
+  puts 'The files has been generated!'
 end
 
-def item2(name_str)
+def item2
   h = readcsv_to_hash
   (0..h[:name].length - 1).each do |n|
-    next unless h[:name][n] == name_str
+    # next unless h[:name][n] == name_str
 
-    puts 'Número de inasistencias: '
-    puts h[:mark][n].count 'A'
+    puts "#{h[:name][n]}: total of absences #{h[:mark][n].count 'A'}"
   end
 end
 
-def item3(name_str, approval)
+def item3(approval)
   h = readcsv_to_hash
   (0..h[:name].length - 1).each do |n|
-    next unless h[:name][n] == name_str
+    # next unless h[:name][n] == name_str
 
-    if mean_elements(h[:mark][n]) >= approval.to_f
-      puts "Congratulations, You've been approved"
+    if average_elements(h[:mark][n]) >= approval.to_f
+      puts "#{h[:name][n]}: aproved with average #{average_elements(h[:mark][n])}"
     else
-      puts 'Your marks are onsatisfactory'
+      puts "#{h[:name][n]}: didn't aprove with average #{average_elements(h[:mark][n])}"
     end
   end
 end
-puts 'Escribe tu nombre antes de empezar'
-nombre = gets.chomp
 
 loop do
-
+  puts ''
   puts 'Opción 1: Descarga el promedio de notas obtenido'
   puts 'Opción 2: Muestra el total de inasistencias'
   puts 'Opción 3: Muestra el resultado de aprobación'
   puts 'Opción 4: Salida'
+  puts ''
   select = gets.chomp
+  puts ''
   if select == '1'
-    item1(nombre)
+    item1
   elsif select == '2'
-    item2(nombre)
+    item2
   elsif select == '3'
     puts 'Ingresa el promedio mínimo de aprobación :'
     mark = gets.chomp
-    item3(nombre, mark)
+    item3(mark)
   elsif select == '4'
     break
   else
