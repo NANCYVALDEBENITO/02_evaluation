@@ -21,10 +21,10 @@ def average_elements(array)
   del = 0
   array.each do |i|
     sum += i.to_i
-    del = del = if i == ' A' || i == 'A'
-                  del + 1
-                else
-                  del + 0
+    del = if i == ' A' || i == 'A'
+            del + 1
+          else
+            del + 0
                 end
   end
   average = sum.to_f / (array.length - del)
