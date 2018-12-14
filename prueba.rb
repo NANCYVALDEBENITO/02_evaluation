@@ -63,9 +63,9 @@ def item3(approval)
     # next unless h[:name][n] == name_str
 
     if average_elements(h[:mark][n]) >= approval.to_f
-      puts "#{h[:name][n]}: aproved with average #{average_elements(h[:mark][n])}"
+      puts "#{h[:name][n]}: approved with average #{average_elements(h[:mark][n])}"
     else
-      puts "#{h[:name][n]}: didn't aprove with average #{average_elements(h[:mark][n])}"
+      puts "#{h[:name][n]}: didn't approve with average #{average_elements(h[:mark][n])}"
     end
   end
 end
